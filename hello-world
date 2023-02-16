@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-statefulset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-container
+          image: busybox
+          command: ["/bin/sh", "-c", "while true; do sleep 10; done"]
+          volumeMounts:
+            - mountPath: "/secret"
+            name: my-secret
+          volumes:
+            - name: my-secret
+            secret:
+              - name: my-secre
